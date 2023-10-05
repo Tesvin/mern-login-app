@@ -1,5 +1,6 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+
 
 /** import all components */
 import Username from './components/Username';
@@ -11,8 +12,10 @@ import Reset from './components/Reset';
 import PageNotFound from './components/PageNotFound';
 
 
+/** auth middleware */
+import { AuthorizeUser, ProtectRoute } from './middleware/auth'
 
-/* root routes */
+/** root routes */
 const router = createBrowserRouter([
     {
         path : '/',
@@ -24,11 +27,11 @@ const router = createBrowserRouter([
     },
     {
         path : '/password',
-        element : <Password></Password>
+        element : <ProtectRoute><Password /></ProtectRoute>
     },
     {
         path : '/profile',
-        element : <Profile></Profile>
+        element : <AuthorizeUser><Profile /></AuthorizeUser>
     },
     {
         path : '/recovery',
@@ -41,13 +44,13 @@ const router = createBrowserRouter([
     {
         path : '*',
         element : <PageNotFound></PageNotFound>
-    }
+    },
 ])
 
 export default function App() {
   return (
     <main>
-       <RouterProvider router={router}></RouterProvider>
+        <RouterProvider router={router}></RouterProvider>
     </main>
   )
 }
