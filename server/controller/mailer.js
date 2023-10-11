@@ -4,7 +4,7 @@ import Mailgen from 'mailgen';
 import ENV from '../config.js';
 
 
-// https://ethereal.email/create
+//https://ethereal.email/create
 let nodeConfig = {
     host: "smtp.ethereal.email",
     port: 587,
@@ -15,6 +15,16 @@ let nodeConfig = {
     }
 }
 
+// let nodeConfig = {
+//     host: "smtp.gmail.com",
+//     port: 587,
+//     secure: false, // true for 465, false for other ports
+//     auth: {
+//         user: 'xyz@gmail.com', // generated ethereal user
+//         pass: '*************', // generated ethereal password
+//     }
+// }
+
 let transporter = nodemailer.createTransport(nodeConfig);
 
 let MailGenerator = new Mailgen({
@@ -23,7 +33,7 @@ let MailGenerator = new Mailgen({
         name: "Mailgen",
         link: 'https://mailgen.js/'
     }
-})
+})          
 
 /** POST: http://localhost:8080/api/registerMail 
  * @param: {
@@ -53,6 +63,13 @@ export const registerMail = async (req, res) => {
         subject : subject || "Signup Successful",
         html : emailBody
     }
+
+    // let message = {
+    //     from : 'xyz@gmail.com',
+    //     to: 'abc@gmail.com',
+    //     subject : subject || "Signup Successful",
+    //     html : emailBody
+    // }
 
     // send mail
     transporter.sendMail(message)
